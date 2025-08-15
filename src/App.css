@@ -1,0 +1,19 @@
+.App__flex {
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  gap: 20px;
+  width: 100%;
+}
+
+.App__devider {
+  min-width: 5px;
+  align-self: stretch;
+  background-color: #ffa801;
+}
+
+.App__title {
+  text-align: center;
+  font-size: 3.6em;
+  margin-bottom: 66px;
+}
