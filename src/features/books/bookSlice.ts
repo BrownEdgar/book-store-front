@@ -1,6 +1,6 @@
 import type { IBooksData } from '@/types/interfaces.d'
-import { asyncThunkCreator, buildCreateSlice, type PayloadAction } from '@reduxjs/toolkit'
-import { fetchBooksData } from './booksApi'
+import { asyncThunkCreator, buildCreateSlice, type PayloadAction, type ReducerCreators } from '@reduxjs/toolkit'
+import { deleteBookById, fetchBooksData, filterBooksByPrice } from './booksApi'
 
 interface BookState {
   data: any[]
@@ -9,8 +9,6 @@ interface BookState {
 const createBooksSlice = buildCreateSlice({
   creators: { asyncThunk: asyncThunkCreator },
 })
-
-
 
 
 const initialState: BookState = {
@@ -31,20 +29,41 @@ export const booksSlice = createBooksSlice({
         rejected: (_, action) => {
           console.log('action', action)
         },
-        fulfilled: (state, action: PayloadAction<IBooksData[]>) => {
+        fulfilled: (_, action: PayloadAction<IBooksData[]>) => {
           return {
             data: action.payload
           }
         },
       }
     ),
-    selectors: {
+    deleteBook: create.asyncThunk(
+      async (bookID) => {
+        console.log(bookID);
 
+        const data = await deleteBookById(bookID)
+        return data
+      }),
+    filterBooks: create.asyncThunk(
+      async () => {
+        const data = await filterBooksByPrice()
+        return data
+      },
+      {
+        fulfilled: (_, action: PayloadAction<IBooksData[]>) => { /// filtery gptic
+          return {
+            data: action.payload
+          }
+        }
+      }
+    ),
+    selectors: {
     }
   })
 })
-export const { fetchBooks } = booksSlice.actions
-// export const { } = booksSlice.selectors
 
+
+export const { fetchBooks } = booksSlice.actions
+export const { deleteBook } = booksSlice.actions
+export const { filterBooks } = booksSlice.actions
 
 export default booksSlice.reducer

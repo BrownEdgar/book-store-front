@@ -4,7 +4,7 @@ import './App.css'
 import { useEffect } from 'react';
 import AddAuthorForm from '@components/AddAuthorForm/AddAuthorForm';
 import AddBookForm from '@components/AddBookForm/AddBookForm';
-import { fetchBooks } from './features/books/bookSlice';
+import { deleteBook, fetchBooks, filterBooks } from './features/books/bookSlice';
 
 function App() {
   const books = useAppSelector((state) => state.books)
@@ -17,6 +17,15 @@ function App() {
   }, [dispatch]);
 
 
+  const handleDelete = (id: any) => {
+    dispatch(deleteBook(id))
+  }
+
+  const handelFilter = () => {
+    dispatch(filterBooks())
+  }
+
+
   return (
     <div className="App">
       <h1 className='App__title'>React Book Store</h1>
@@ -27,13 +36,25 @@ function App() {
       </div>
 
       <hr />
+      <div className='icons'>
+        <div className="filter">
+          <button onClick={handelFilter}>Filter ^$</button>
+        </div>
+      </div>
+      <hr />
       <div className="App__books">
         {books.data.map((elem) => {
+
           return (
-            <div>
+            <div key={elem._id} className='book'>
               <h1>{elem.title}</h1>
-              <img src={`http://localhost:3000/images/${elem.poster}`} />
-              <p>{elem.description}</p>
+              <h2>Genere: {elem.genre}</h2>
+              <h2>Price: {elem.price} $</h2>
+              <h2>Ratings: {elem.ratings}</h2>
+              <h2>Author:
+                {elem.author == null ? <label>cant find</label> : elem.author}
+              </h2>
+              <button onClick={() => handleDelete(elem._id)}>DELETE</button>
             </div>
           )
         })}

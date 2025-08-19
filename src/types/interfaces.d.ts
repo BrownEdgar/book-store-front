@@ -5,7 +5,6 @@ export interface IBooksData {
 export interface IBook {
   title: string
   genre: string
-  poster: string
   pages: number
   author: string
   price: number
