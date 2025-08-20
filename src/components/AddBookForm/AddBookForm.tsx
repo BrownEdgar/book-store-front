@@ -1,4 +1,4 @@
-import { Field, Form, Formik } from 'formik';
+import { Field, Form, Formik, type FormikHelpers, type FormikProps } from 'formik';
 import "./AddBookForm.module.css";
 import type { IBook } from '@/types/interfaces';
 import axios from 'axios';
@@ -9,6 +9,7 @@ const initialValues: IBook = {
   genre: '',
   author: '',
   price: 10,
+  poster: {},
   pages: 10,
   releaseDate: '',
   tags: [],
@@ -17,13 +18,18 @@ const initialValues: IBook = {
 
 function AddBookForm() {
 
-  const handleSubmit = async (values: IBook) => {
-    console.log(values);
+  const handleSubmit = async (values: IBook, formik: FormikHelpers<IBook>) => {
     try {
-      const res = await axios.post(CONFIG.VITE_DB_URL + "/books", values);
-      const data = res.data
-      console.log(data);
+      const res = await axios.post(CONFIG.VITE_DB_URL + "/books", values,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+      );
 
+      window.location.reload()
+      formik.resetForm()
     } catch (error) {
       console.log(error);
     }
@@ -37,7 +43,7 @@ function AddBookForm() {
         {
           () => {
             return (
-              <Form>
+              <Form encType="multipart/form-data">
                 <div className='FormGroup FormGroup-50'>
                   <label htmlFor="title">Book title</label>
                   <Field type="text" name="title" id="title" />
@@ -83,6 +89,20 @@ function AddBookForm() {
                     <option value="fantasy">Fantasy</option>
                     <option value="drama">Drama</option>
                     <option value="art-chaos">Art-chaos</option>
+                  </Field>
+                </div>
+                <div className='FormGroup FormGroup-50'>
+                  <label htmlFor="poster">Book poster</label>
+                  <Field name="poster">
+                    {({ form }) => (
+                      <input
+                        type="file"
+                        onChange={(event) => {
+                          const file = event.currentTarget.files?.[0];
+                          form.setFieldValue("poster", file);
+                        }}
+                      />
+                    )}
                   </Field>
                 </div>
                 <div className='FormGroup'>

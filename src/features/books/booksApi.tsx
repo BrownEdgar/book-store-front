@@ -7,15 +7,13 @@ export const fetchBooksData = async (): Promise<IBooksData[]> => {
   return res.data as IBooksData[]
 }
 
-export const deleteBookById = async (id: any) => {
-  console.log(id);
+export const deleteBookById = async (id: string) => {
+
   const res = await axios.delete(CONFIG.VITE_DB_URL + "/books" + '/' + id)
   return res
 }
 
 export const filterBooksByPrice = async () => {
-  
-  
-  const res = await axios.get(CONFIG.VITE_DB_URL + "/books/filter")
+  const res = await axios.get(CONFIG.VITE_DB_URL + "/books/filter?sotrfield=price")
   return res.data
 }

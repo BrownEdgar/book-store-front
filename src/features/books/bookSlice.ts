@@ -38,8 +38,6 @@ export const booksSlice = createBooksSlice({
     ),
     deleteBook: create.asyncThunk(
       async (bookID) => {
-        console.log(bookID);
-
         const data = await deleteBookById(bookID)
         return data
       }),
@@ -49,7 +47,7 @@ export const booksSlice = createBooksSlice({
         return data
       },
       {
-        fulfilled: (_, action: PayloadAction<IBooksData[]>) => { /// filtery gptic
+        fulfilled: (_, action: PayloadAction<IBooksData[]>) => {
           return {
             data: action.payload
           }
@@ -62,8 +60,6 @@ export const booksSlice = createBooksSlice({
 })
 
 
-export const { fetchBooks } = booksSlice.actions
-export const { deleteBook } = booksSlice.actions
-export const { filterBooks } = booksSlice.actions
+export const { fetchBooks, deleteBook, filterBooks } = booksSlice.actions
 
 export default booksSlice.reducer

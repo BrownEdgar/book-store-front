@@ -6,6 +6,7 @@ export interface IBook {
   title: string
   genre: string
   pages: number
+  poster: any
   author: string
   price: number
   releaseDate?: Date | string
@@ -17,5 +18,6 @@ export interface IAuthor {
   name: string
   age: number,
   country: string,
-  books: IBook[]
+  books: IBook[],
+  avatar: any
 }

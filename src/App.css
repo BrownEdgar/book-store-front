@@ -26,8 +26,6 @@
   align-items: center;
 
   .filter {
-
-
     button {
       padding: 10px 20px;
       background-color: orange;
@@ -54,7 +52,7 @@
   gap: 20px;
   padding-block: 40px;
   justify-content: center;
-  
+
   .book {
     width: 450px;
     background-color: rgb(243, 243, 243);
@@ -84,6 +82,13 @@
         scale: .93;
         background-color: rgb(177, 7, 41);
       }
+    }
+
+    img {
+      width: 230px;
+      height: 360px;
+      margin: 20px auto;
+      display: block;
     }
   }
 }

@@ -48,6 +48,7 @@ function App() {
           return (
             <div key={elem._id} className='book'>
               <h1>{elem.title}</h1>
+              <img src={`http://localhost:3000/images/${elem.poster}`} alt="" />
               <h2>Genere: {elem.genre}</h2>
               <h2>Price: {elem.price} $</h2>
               <h2>Ratings: {elem.ratings}</h2>

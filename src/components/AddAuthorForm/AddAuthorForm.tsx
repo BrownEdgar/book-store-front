@@ -8,7 +8,9 @@ import { CONFIG } from '@/shared/config';
 const initialValues: IAuthor = {
   name: '',
   age: 0,
-  country: ''
+  country: '',
+  avatar: {},
+  books: [],
 }
 const validationSchema = yup.object({
   name: yup.string().required('Required'),
@@ -18,9 +20,15 @@ const validationSchema = yup.object({
 
 function AddAuthorForm() {
   const handleSubmit = async (values: IAuthor) => {
-    console.log(values);
+
     try {
-      const res = await axios.post(CONFIG.VITE_DB_URL + "/authors", values);
+      const res = await axios.post(CONFIG.VITE_DB_URL + "/authors", values,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+      );
       const data = res.data
       console.log(data);
     } catch (error) {
@@ -38,7 +46,7 @@ function AddAuthorForm() {
         {
           () => {
             return (
-              <Form>
+              <Form encType="multipart/form-data">
                 <div className='FormGroup'>
                   <label htmlFor="name">Author Name</label>
                   <Field type="text" name="name" id="name" />
@@ -60,6 +68,17 @@ function AddAuthorForm() {
                   </Field>
                   <ErrorMessage name='country' component='p' />
                 </div>
+                <Field name="avatar">
+                  {({ form }) => (
+                    <input
+                      type="file"
+                      onChange={(event) => {
+                        const file = event.currentTarget.files?.[0];
+                        form.setFieldValue("avatar", file);
+                      }}
+                    />
+                  )}
+                </Field>
                 <div className='FormGroup'>
                   <Field type="submit" value="add Author" />
                 </div>
