@@ -89,6 +89,7 @@
       height: 360px;
       margin: 20px auto;
       display: block;
+      object-fit: cover;
     }
   }
 }

@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import AddAuthorForm from '@components/AddAuthorForm/AddAuthorForm';
 import AddBookForm from '@components/AddBookForm/AddBookForm';
 import { deleteBook, fetchBooks, filterBooks } from './features/books/bookSlice';
+import BooksInfo from './components/BooksInfo/BooksInfo';
 
 function App() {
   const books = useAppSelector((state) => state.books)
@@ -25,7 +26,6 @@ function App() {
     dispatch(filterBooks())
   }
 
-
   return (
     <div className="App">
       <h1 className='App__title'>React Book Store</h1>
@@ -34,6 +34,9 @@ function App() {
         <div className="App__devider"></div>
         <AddBookForm />
       </div>
+
+      <BooksInfo />
+
 
       <hr />
       <div className='icons'>
