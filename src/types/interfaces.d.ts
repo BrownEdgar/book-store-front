@@ -1,19 +1,6 @@
 export interface IBooksData {
   [key: string]: string
 }
-
-export interface IBook {
-  title: string
-  genre: string
-  pages: number
-  poster: any
-  author: string
-  price: number
-  releaseDate?: Date | string
-  tags?: string[]
-  ratings?: number[]
-}
-
 export interface IAuthor {
   name: string
   age: number,
@@ -21,3 +8,18 @@ export interface IAuthor {
   books: IBook[],
   avatar: any
 }
+
+export interface IBook {
+  _id: string
+  title: string
+  genre: string
+  pages: number
+  poster: string
+  author: IAuthor
+  price: number
+  releaseDate?: Date | string
+  tags?: string[]
+  ratings?: number[]
+}
+
+

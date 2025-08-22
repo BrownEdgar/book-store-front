@@ -1,16 +1,14 @@
 import { asyncThunkCreator, buildCreateSlice } from '@reduxjs/toolkit'
-import { fetchGenresData, getUnicualGeanre } from './geanresApi'
+import { fetchGenresData } from './geanresApi'
 
 
 
 interface GeanreState {
-  all: any[]
-  unique: any[]
+  all: { count: number, geanre: 'string' }[]
 }
 
 const initialState: GeanreState = {
-  all: [],
-  unique: [],
+  all: []
 }
 
 const createGeanresSlice = buildCreateSlice({
@@ -22,31 +20,22 @@ export const geanreSlice = createGeanresSlice({
   initialState,
   reducers: (create) => ({
     fetchGeanres: create.asyncThunk(
-  async () => {
-    const data = await fetchGenresData()
-    return data
-  },
-  {
-    fulfilled: (state, action) => {
-      state.all = action.payload
-    },
-  }
-),
-getUnicGeanre: create.asyncThunk(
-  async () => {
-    const data = await getUnicualGeanre()
-    return data
-  },
-  {
-    fulfilled: (state, action) => {
-      state.unique = action.payload
-    },
-  }
-),
+      async () => {
+        const data = await fetchGenresData()
+        return data
+      },
+      {
+        fulfilled: (state, action) => {
+          console.log(action.payload);
+
+          state.all = action.payload
+        },
+      }
+    )
   }),
 })
 
 
-export const { fetchGeanres, getUnicGeanre } = geanreSlice.actions
+export const { fetchGeanres } = geanreSlice.actions
 
 export default geanreSlice.reducer

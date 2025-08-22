@@ -1,9 +1,11 @@
-import type { IBooksData } from '@/types/interfaces.d'
-import { asyncThunkCreator, buildCreateSlice, type PayloadAction, type ReducerCreators } from '@reduxjs/toolkit'
+import type { IBook, IBooksData } from '@/types/interfaces.d'
+import { asyncThunkCreator, buildCreateSlice, type PayloadAction } from '@reduxjs/toolkit'
 import { deleteBookById, fetchBooksData, filterBooksByPrice } from './booksApi'
 
 interface BookState {
-  data: any[]
+  data: IBook[],
+  filterName: string[]
+  specialBook: Partial<IBook>,
 }
 
 const createBooksSlice = buildCreateSlice({
@@ -13,6 +15,8 @@ const createBooksSlice = buildCreateSlice({
 
 const initialState: BookState = {
   data: [],
+  filterName: [],
+  specialBook: {}
 }
 
 export const booksSlice = createBooksSlice({
@@ -31,7 +35,8 @@ export const booksSlice = createBooksSlice({
         },
         fulfilled: (_, action: PayloadAction<IBooksData[]>) => {
           return {
-            data: action.payload
+            data: action.payload,
+            filterName: [],
           }
         },
       }
@@ -49,17 +54,33 @@ export const booksSlice = createBooksSlice({
       {
         fulfilled: (_, action: PayloadAction<IBooksData[]>) => {
           return {
-            data: action.payload
+            data: action.payload,
+            filterName: [],
           }
         }
       }
     ),
-    selectors: {
+    changeFilter: (state, { payload: { name, checked } }) => {
+      if (checked) {
+        state.filterName.push(name)
+      } else {
+        state.filterName = state.filterName.filter(elem => elem !== name)
+      }
+      return state
     }
-  })
+  }),
+  selectors: {
+    getBooksByFilter: (state) => {
+      if (state.filterName.length === 0) {
+        return state.data
+      }
+      return state.data.filter((book) => state.filterName.includes(book.genre))
+    }
+  }
 })
 
 
-export const { fetchBooks, deleteBook, filterBooks } = booksSlice.actions
+export const { fetchBooks, deleteBook, filterBooks, changeFilter } = booksSlice.actions
+export const { getBooksByFilter } = booksSlice.selectors
 
 export default booksSlice.reducer

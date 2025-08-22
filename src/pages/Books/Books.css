@@ -1,0 +1,47 @@
+.Books {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding-block: 40px;
+  justify-content: center;
+
+  .book {
+    width: 450px;
+    background-color: rgb(243, 243, 243);
+    border-radius: 25px;
+    padding: 30px;
+    padding-left: 20px;
+    position: relative;
+
+    h2 {
+      margin-top: 25px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: crimson;
+      transition: .5s;
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      color: white;
+      border: 0;
+      border-radius: 5px;
+      font-size: 15px;
+      cursor: pointer;
+
+      &:hover {
+        scale: .93;
+        background-color: rgb(177, 7, 41);
+      }
+    }
+
+    img {
+      width: 230px;
+      height: 360px;
+      margin: 20px auto;
+      display: block;
+      object-fit: cover;
+    }
+  }
+}
