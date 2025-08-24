@@ -11,12 +11,15 @@ export default function Info() {
   const authors = useAppSelector((state) => state.autors)
   const geanres = useAppSelector((state) => state.geanres)
   const dispatch = useAppDispatch()
+  console.log(geanres);
+  
 
   useEffect(() => {
     dispatch(fetchAuthors())
     dispatch(fetchGeanres())
   }, [dispatch])
 
+  
   const handleRight = () => {
     setValue((prev) => !prev);
   };

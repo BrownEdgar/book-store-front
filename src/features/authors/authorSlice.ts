@@ -1,15 +1,18 @@
 import { asyncThunkCreator, buildCreateSlice } from '@reduxjs/toolkit'
-import { fetchAuthorsData } from './authorApi'
+import { deleteFetchData, fetchAuthorsData, fetchSpecialAuthorData } from './authorApi'
+import type { IAuthor } from '@/types/interfaces'
 
 
 
 
 interface AuthorsState {
-  data: any[]
+  data: any[],
+    specialAuthor: Partial<IAuthor>,
 }
 
 const initialState: AuthorsState = {
   data: [],
+  specialAuthor : {}
 }
 
 const createAuthorsSlice = buildCreateSlice({
@@ -37,10 +40,44 @@ export const authorSlice = createAuthorsSlice({
         },
       }
     ),
+    fetchSpecialAuthor: create.asyncThunk(
+      async (id : string) => {
+        const data = await fetchSpecialAuthorData(id)
+        return data
+      },
+      {
+        pending: (_) => {
+          console.log('Loading author...')
+        },
+        fulfilled: (state, action) => {
+          state.specialAuthor = action.payload
+        },
+        rejected: (_, action) => {
+          console.error('Error loading author', action.error)
+        },
+      }
+    ),
+    deleteFetch: create.asyncThunk(
+      async (id : string) => {
+        const data = await deleteFetchData(id)
+        return data
+      },
+      {
+        pending: (_) => {
+          console.log('Loading author...')
+        },
+        fulfilled: (state, action) => {
+          state.data = action.payload
+        },
+        rejected: (_, action) => {
+          console.error('Error loading author', action.error)
+        },
+      }
+    ),
   }),
 })
 
 
-export const { fetchAuthors } = authorSlice.actions
+export const { fetchAuthors, fetchSpecialAuthor, deleteFetch } = authorSlice.actions
 
 export default authorSlice.reducer

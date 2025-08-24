@@ -6,8 +6,9 @@
   margin-left: -100px;
   background-color: rgba(200, 198, 198, 0.638);
   border-radius: 15px;
-  transform: translateX(0px);
+  transform: translateX(-600px);
   transition: 1s;
+  z-index: 77777777777777777777;
 
 
   .ok {
@@ -34,12 +35,13 @@
 .info__main_left {
   width: 200px;
   height: 750px;
+  z-index: 77777777777777777777;
   position: fixed;
   top: 30px;
   margin-left: -100px;
   background-color: rgba(200, 198, 198, 0.638);
   border-radius: 15px;
-  transform: translateX(-200px);
+  transform: translateX(-780px);
   transition: 1s;
 
   .ok {

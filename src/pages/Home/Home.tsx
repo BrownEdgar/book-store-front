@@ -1,22 +1,24 @@
 import { Link, Outlet } from 'react-router';
+import './Home.css'
 
 function Home() {
   return <div>
-    <ul>
-      <li>
-        <Link to='books'>See all books</Link>
-      </li>
-      <li>
-        <Link to='authors'>See all authors</Link>
-      </li>
-      <li>
-        <Link to='add-book'>Add book</Link>
-      </li>
-      <li>
-        <Link to='add-author'>Add Author</Link>
-      </li>
-    </ul>
-
+    <nav>
+      <ul>
+        <li>
+          <Link to='books'>See all books</Link>
+        </li>
+        <li>
+          <Link to='authors'>See all authors</Link>
+        </li>
+        <li>
+          <Link to='add-book'>Add book</Link>
+        </li>
+        <li>
+          <Link to='add-author'>Add Author</Link>
+        </li>
+      </ul>
+    </nav>
 
 
     <Outlet />

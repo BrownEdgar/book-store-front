@@ -1,8 +1,9 @@
 import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import "./Books.css";
-import { deleteBook, fetchBooks, getBooksByFilter } from '@/features/books/bookSlice';
+import { fetchBooks, getBooksByFilter } from '@/features/books/bookSlice';
 import { useEffect } from 'react';
 import { Link } from 'react-router';
+import Info from '@/components/BooksInfo/BooksInfo';
 
 function Books() {
   const books = useAppSelector(getBooksByFilter);
@@ -13,12 +14,11 @@ function Books() {
   }, [dispatch]);
 
 
-  const handleDelete = (id: any) => {
-    dispatch(deleteBook(id))
-  }
+
 
   return (
     <div className="Books">
+      <Info />
       {books.map((elem) => {
         return (
           <div key={elem._id} className='book'>
@@ -32,7 +32,6 @@ function Books() {
             <h2>Author:
               {elem.author == null ? <label>cant find</label> : elem.author}
             </h2>
-            <button onClick={() => handleDelete(elem._id)}>DELETE</button>
           </div>
         )
       })}

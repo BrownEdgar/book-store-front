@@ -1,6 +1,6 @@
 import type { IBook, IBooksData } from '@/types/interfaces.d'
 import { asyncThunkCreator, buildCreateSlice, type PayloadAction } from '@reduxjs/toolkit'
-import { deleteBookById, fetchBooksData, filterBooksByPrice } from './booksApi'
+import { deleteBookById, fetchBooksData, fetchSpecialBookData, filterBooksByPrice } from './booksApi'
 
 interface BookState {
   data: IBook[],
@@ -42,7 +42,7 @@ export const booksSlice = createBooksSlice({
       }
     ),
     deleteBook: create.asyncThunk(
-      async (bookID) => {
+      async (bookID : string) => {
         const data = await deleteBookById(bookID)
         return data
       }),
@@ -67,7 +67,18 @@ export const booksSlice = createBooksSlice({
         state.filterName = state.filterName.filter(elem => elem !== name)
       }
       return state
-    }
+    },
+    fetchSpecialBook: create.asyncThunk(
+      async (id: string) => {
+        const data: IBook = await fetchSpecialBookData(id)
+        return data
+      },
+      {
+        fulfilled: (state, action: PayloadAction<IBook>) => {
+          state.specialBook = action.payload
+        }
+      }
+    ),
   }),
   selectors: {
     getBooksByFilter: (state) => {
@@ -80,7 +91,7 @@ export const booksSlice = createBooksSlice({
 })
 
 
-export const { fetchBooks, deleteBook, filterBooks, changeFilter } = booksSlice.actions
+export const { fetchBooks, deleteBook, filterBooks, changeFilter, fetchSpecialBook } = booksSlice.actions
 export const { getBooksByFilter } = booksSlice.selectors
 
 export default booksSlice.reducer

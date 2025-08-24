@@ -4,7 +4,7 @@ import { fetchGenresData } from './geanresApi'
 
 
 interface GeanreState {
-  all: { count: number, geanre: 'string' }[]
+  all: { count: number, geanre: string }[]
 }
 
 const initialState: GeanreState = {
@@ -27,7 +27,6 @@ export const geanreSlice = createGeanresSlice({
       {
         fulfilled: (state, action) => {
           console.log(action.payload);
-
           state.all = action.payload
         },
       }

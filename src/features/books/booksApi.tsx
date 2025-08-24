@@ -8,7 +8,6 @@ export const fetchBooksData = async (): Promise<IBooksData[]> => {
 }
 
 export const deleteBookById = async (id: string) => {
-
   const res = await axios.delete(CONFIG.VITE_DB_URL + "/books" + '/' + id)
   return res
 }
@@ -16,4 +15,9 @@ export const deleteBookById = async (id: string) => {
 export const filterBooksByPrice = async () => {
   const res = await axios.get(CONFIG.VITE_DB_URL + "/books/filter?sotrfield=price")
   return res.data
+}
+
+export const fetchSpecialBookData = async (id : string) => {
+  const res = await axios.get(CONFIG.VITE_DB_URL + `/books/specialBook/${id}`)
+  return res.data[0]
 }

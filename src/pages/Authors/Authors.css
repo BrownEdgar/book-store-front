@@ -1,0 +1,29 @@
+.author {
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding-block: 40px;
+    justify-content: center;
+
+    div {
+        width: 450px;
+        background-color: rgb(243, 243, 243);
+        border-radius: 25px;
+        padding: 30px;
+        padding-left: 20px;
+        position: relative;
+
+        h2 {
+            margin-top: 25px;
+        }
+
+        img {
+            width: 230px;
+            height: 360px;
+            margin: 20px auto;
+            display: block;
+            object-fit: cover;
+        }
+    }
+}
